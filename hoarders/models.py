@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, User
+from django.contrib.auth.models import User
 
 
 def user_avatar_upload_path(instance, filename):
@@ -7,16 +7,16 @@ def user_avatar_upload_path(instance, filename):
     return f"avatars/{instance.id}/{filename}"
 
 
-class CustomUser(AbstractUser):
-    id = models.AutoField(primary_key=True)
-    nickname = models.CharField(max_length=32, blank=False, null=False, unique=True)
-    avatar = models.ImageField(upload_to=user_avatar_upload_path, blank=True, null=True)
-    desc = models.TextField(blank=True, null=True)
-    createdAt = models.DateTimeField(auto_now_add=True)
-    lastLoginAt = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"nickname: {self.nickname}, email: {self.email}"
+# class CustomUser(AbstractUser):
+#     id = models.AutoField(primary_key=True)
+#     nickname = models.CharField(max_length=32, blank=False, null=False, unique=True)
+#     avatar = models.ImageField(upload_to=user_avatar_upload_path, blank=True, null=True)
+#     desc = models.TextField(blank=True, null=True)
+#     createdAt = models.DateTimeField(auto_now_add=True)
+#     lastLoginAt = models.DateTimeField(auto_now=True)
+#
+#     def __str__(self):
+#         return f"nickname: {self.nickname}, email: {self.email}"
 
 
 class Collection(models.Model):
