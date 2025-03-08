@@ -1,4 +1,5 @@
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import User
+from hoarders.models import Collection, CollectionImage
 from rest_framework import serializers
 
 
@@ -8,7 +9,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["url", "username", "email", "groups"]
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Group
-        fields = ["url", "name"]
+        model = Collection
+        fields = ["id", "title", "desc", "user", "createdAt", "modifiedAt"]
+
+
+class CollectionImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CollectionImage
+        fields = ["id", "collection", "user", "path", "createdAt", "modifiedAt"]

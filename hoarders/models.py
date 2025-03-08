@@ -1,17 +1,22 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser, User
 
 
-class User(models.Model):
+def user_avatar_upload_path(instance, filename):
+    """Generate file path for user avatars"""
+    return f"avatars/{instance.id}/{filename}"
+
+
+class CustomUser(AbstractUser):
     id = models.AutoField(primary_key=True)
-    nickname = models.CharField(max_length=32, blank=False, null=False)
-    avatar = models.TextField(max_length=512, blank=True, null=True)
-    email = models.EmailField(unique=True)
-    desc = models.TextField(blank=True)
+    nickname = models.CharField(max_length=32, blank=False, null=False, unique=True)
+    avatar = models.ImageField(upload_to=user_avatar_upload_path, blank=True, null=True)
+    desc = models.TextField(blank=True, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
-    lastLoginAt = models.DateTimeField()
+    lastLoginAt = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "nickname: {}, email: {}".format(self.nickname, self.email)
+        return f"nickname: {self.nickname}, email: {self.email}"
 
 
 class Collection(models.Model):
