@@ -36,5 +36,3 @@ class CollectionImage(models.Model):
 
     def __str__(self):
         return "path: {}".format(self.path)
-
-
